@@ -1,0 +1,24 @@
+# SwiftLint
+
+allow_zero_lintable_files: false
+strict: false
+warning_threshold: 21
+reporter: xcode
+function_parameter_count: 7
+file_length: 700
+line_length: 150
+function_body_length: 70
+type_body_length: 500
+disabled_rules:
+  - colon
+  - comma
+  - control_statement
+opt_in_rules:
+  - empty_count
+  - missing_docs
+included:
+excluded:
+  - Pods
+  - Sources/ExcludedFolder
+  - Sources/ExcludedFile.swift
+  - Sources/*/ExcludedFile.swift
