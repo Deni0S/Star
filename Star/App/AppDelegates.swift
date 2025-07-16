@@ -23,6 +23,7 @@ extension AppDelegates: UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         lifecycleDelegate.didFinishLaunchingWithOptions()
+        return true
     }
 
     func application(

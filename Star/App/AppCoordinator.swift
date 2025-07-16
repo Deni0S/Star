@@ -9,7 +9,7 @@ protocol AppSceneHandlers: Sendable {
 
 protocol AppLifecycleInterface {
     /// Launch process is almost done and the app is almost ready to run
-    func didFinishLaunchingWithOptions() -> Bool
+    func didFinishLaunchingWithOptions()
 }
 
 protocol Configurable: Sendable {
@@ -31,10 +31,12 @@ final actor AppCoordinator: ObservableObject {
         Task(priority: .high) {
             await settingsManager.configure()
         }
+        let analyticManager = AnalyticManager()
         let pushManager = PushManager(
             logger: loggingManager)
 
         self.managers = AppManagers(
+            analytic: analyticManager,
             logging: loggingManager,
             push: pushManager,
             settings: settingsManager)
@@ -45,11 +47,11 @@ final actor AppCoordinator: ObservableObject {
 
 extension AppCoordinator: @preconcurrency AppLifecycleInterface {
 
-    @MainActor func didFinishLaunchingWithOptions() -> Bool {
+    @MainActor func didFinishLaunchingWithOptions() {
         Task(priority: .high) {
             await managers.push.silentAuthorization()
+            await managers.analytic.requestTrackingAuthorization()
         }
-        return true
     }
 }
 
