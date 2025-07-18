@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - AppDelegates
+// MARK: - App Delegates
 
 final class AppDelegates: NSObject, ObservableObject {
 

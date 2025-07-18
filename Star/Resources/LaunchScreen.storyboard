@@ -17,10 +17,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_left_icon" translatesAutoresizingMaskIntoConstraints="NO" id="9ch-E6-X8r">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StarLeftHandIcon" translatesAutoresizingMaskIntoConstraints="NO" id="9ch-E6-X8r">
                                 <rect key="frame" x="78" y="307.66666666666669" width="237" height="237.00000000000006"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_background_icon" translatesAutoresizingMaskIntoConstraints="NO" id="N7u-cn-CtS">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundStarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="N7u-cn-CtS">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
                         </subviews>
@@ -44,8 +44,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="star_background_icon" width="360" height="788"/>
-        <image name="star_left_icon" width="237" height="237"/>
+        <image name="BackgroundStarIcon" width="360" height="788"/>
+        <image name="StarLeftHandIcon" width="237" height="237"/>
         <namedColor name="AccentColor">
             <color red="0.98400002717971802" green="0.57300001382827759" blue="0.14499999582767487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

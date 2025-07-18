@@ -25,7 +25,7 @@ protocol UserNotificationCenterInterface {
     func willPresent(_ notification: UNNotification)
 }
 
-// MARK: - PushManager
+// MARK: - Push Manager
 
 final actor PushManager: NSObject {
 
@@ -38,7 +38,7 @@ final actor PushManager: NSObject {
     }
 }
 
-// MARK: - PushAuthorizationInterface
+// MARK: - Push Authorization
 
 extension PushManager: PushAuthorizationInterface {
 
@@ -53,7 +53,7 @@ extension PushManager: PushAuthorizationInterface {
     }
 }
 
-// MARK: RemoteNotificationsInterface
+// MARK: Remote Notifications
 
 extension PushManager: @preconcurrency RemoteNotificationsInterface {
 
@@ -77,24 +77,36 @@ extension PushManager: @preconcurrency RemoteNotificationsInterface {
     @MainActor func didReceiveRemoteNotification(
         _ userInfo: [AnyHashable : Any]
     ) {
-
+        Task(priority: .high) {
+            await pushHandler(userInfo)
+        }
     }
 }
 
-// MARK: - UserNotificationCenterInterface
+// MARK: - User Notification Center
 
 extension PushManager: @preconcurrency UserNotificationCenterInterface {
 
     @MainActor func willPresent(
         _ notification: UNNotification
     ) {
-
+        Task(priority: .high) {
+            await pushHandler(notification.request.content.userInfo)
+        }
     }
 }
 
 // MARK: - Private
 
 private extension PushManager {
+
+    func pushHandler(
+        _ userInfo: [AnyHashable : Any]
+    ) {
+        if let smsCode = userInfo["smsCode"] as? String {
+            NotificationCenter.default.post(name: NSNotification.Name("SMSCodeReceived"), object: smsCode)
+        }
+    }
 
     func registerForRemoteNotifications(
         _ options: UNAuthorizationOptions

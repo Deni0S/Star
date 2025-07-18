@@ -11,13 +11,13 @@ protocol TrackingInterface {
     func requestTrackingAuthorization() async
 }
 
-// MARK: - AnalyticManager
+// MARK: - Analytic Manager
 
 final actor AnalyticManager {
 
 }
 
-// MARK: - TrackingInterface
+// MARK: - Tracking
 
 extension AnalyticManager: TrackingInterface {
 

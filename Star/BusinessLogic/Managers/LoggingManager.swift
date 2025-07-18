@@ -13,7 +13,7 @@ protocol LoggingSendingInterface: Sendable {
     func remoteAndDebug(_ type: LoggingManager.ErrorType) async
 }
 
-// MARK: - LoggingManager
+// MARK: - Logging Manager
 
 final actor LoggingManager {
 
@@ -50,7 +50,7 @@ final actor LoggingManager {
     }
 }
 
-// MARK: - LoggingSendingInterface
+// MARK: - Logging Sending
 
 extension LoggingManager: LoggingSendingInterface {
 

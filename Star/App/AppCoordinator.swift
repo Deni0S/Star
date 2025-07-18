@@ -17,7 +17,7 @@ protocol Configurable: Sendable {
     func configure() async
 }
 
-// MARK: - AppCoordinator
+// MARK: - App Coordinator
 
 final actor AppCoordinator: ObservableObject {
 
@@ -34,16 +34,19 @@ final actor AppCoordinator: ObservableObject {
         let analyticManager = AnalyticManager()
         let pushManager = PushManager(
             logger: loggingManager)
+        let authorizationManager = AuthorizationManager(
+            loger: loggingManager)
 
         self.managers = AppManagers(
             analytic: analyticManager,
+            authorization: authorizationManager,
             logging: loggingManager,
             push: pushManager,
             settings: settingsManager)
     }
 }
 
-// MARK: - AppLifecycleDelegate
+// MARK: - App Lifecycle
 
 extension AppCoordinator: @preconcurrency AppLifecycleInterface {
 
@@ -55,9 +58,9 @@ extension AppCoordinator: @preconcurrency AppLifecycleInterface {
     }
 }
 
-// MARK: - AppSceneHandlers
+// MARK: - App Scene Handlers
 
-extension AppCoordinator: AppSceneHandlers {
+extension AppCoordinator: @preconcurrency AppSceneHandlers {
 
     func scenePhase(
         _ value: ScenePhase

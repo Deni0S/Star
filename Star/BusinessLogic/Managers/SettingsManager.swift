@@ -4,7 +4,7 @@ import SwiftUI
 
 typealias SettingsInterface = Sendable & Configurable
 
-// MARK: - SettingsKeys
+// MARK: - Settings Keys
 
 #if RELEASE
 enum SettingsKeys: String {
@@ -19,16 +19,16 @@ enum SettingsKeys: String {
 }
 #endif
 
-// MARK: - SettingsManager
+// MARK: - Settings Manager
 
 final actor SettingsManager {
 
     private var saveInfoTask: Task<(), Never>?
 }
 
-// MARK: - SettingsInterface
+// MARK: - Configurable
 
-extension SettingsManager: SettingsInterface {
+extension SettingsManager: Configurable {
 
     func configure() async {
         saveInfoTask?.cancel()
