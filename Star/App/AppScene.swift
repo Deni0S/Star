@@ -42,6 +42,7 @@ struct AppScene: App {
                     }
                 }
             }
+            .statusBar(hidden: true)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     showLaunchScreen = false
