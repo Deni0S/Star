@@ -4,7 +4,7 @@ final class PhoneRequestViewModel: ObservableObject {
 
     @Binding var nextStep: String
 
-    private let authirizationHandlers: AuthorizationHandlersInterface
+    private let authirizationHandlers: AuthorizationInterface
 
     @Published private(set) var currentPhoneNumber = ""
 
@@ -15,7 +15,7 @@ final class PhoneRequestViewModel: ObservableObject {
     }
 
     init(
-        authirizationHandlers: AuthorizationHandlersInterface,
+        authirizationHandlers: AuthorizationInterface,
         nextStep: Binding<String>
     ) {
         self.authirizationHandlers = authirizationHandlers

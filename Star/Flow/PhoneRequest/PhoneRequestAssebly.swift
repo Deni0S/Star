@@ -1,8 +1,8 @@
-import SwiftUICore
+import SwiftUI
 
 struct PhoneRequestAssembly {
 
-    func build(
+    @MainActor func build(
         star: Namespace.ID,
         nextStep: Binding<String>
     ) -> PhoneRequestView {

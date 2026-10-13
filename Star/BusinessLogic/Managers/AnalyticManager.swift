@@ -6,7 +6,7 @@ import SwiftUI
 
 typealias AnalyticInterface = Sendable & TrackingInterface
 
-protocol TrackingInterface {
+protocol TrackingInterface: Sendable {
     /// Request to receive IDFA
     func requestTrackingAuthorization() async
 }

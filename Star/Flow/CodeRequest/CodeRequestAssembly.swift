@@ -1,8 +1,8 @@
-import SwiftUICore
+import SwiftUI
 
 struct CodeRequestAssembly {
 
-    func build(
+    @MainActor func build(
         star: Namespace.ID,
         phoneNumber: String,
         nextStep: Binding<Bool>

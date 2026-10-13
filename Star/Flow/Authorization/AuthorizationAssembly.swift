@@ -1,8 +1,8 @@
-import SwiftUICore
+import SwiftUI
 
 struct AuthorizationAssembly {
 
-    func build(
+    @MainActor func build(
         star: Namespace.ID,
         authorized: Binding<Bool>
     ) -> AuthorizationView {

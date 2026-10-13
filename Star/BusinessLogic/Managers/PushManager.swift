@@ -11,7 +11,7 @@ protocol PushAuthorizationInterface: Sendable {
     func silentAuthorization() async
 }
 
-protocol RemoteNotificationsInterface {
+protocol RemoteNotificationsInterface: Sendable {
     /// Successfully registered with APNs
     func didRegisterForRemoteNotificationsWithDeviceToken(_ token: Data)
     /// Cannot successfully complete the registration process APNs
@@ -20,7 +20,7 @@ protocol RemoteNotificationsInterface {
     func didReceiveRemoteNotification(_ userInfo: [AnyHashable: Any])
 }
 
-protocol UserNotificationCenterInterface {
+protocol UserNotificationCenterInterface: Sendable {
     /// Process a notification received while the app is running in the foreground
     func willPresent(_ notification: UNNotification)
 }
@@ -77,8 +77,9 @@ extension PushManager: @preconcurrency RemoteNotificationsInterface {
     @MainActor func didReceiveRemoteNotification(
         _ userInfo: [AnyHashable : Any]
     ) {
+        nonisolated(unsafe) let info = userInfo
         Task(priority: .high) {
-            await pushHandler(userInfo)
+            await pushHandler(info)
         }
     }
 }
@@ -90,8 +91,9 @@ extension PushManager: @preconcurrency UserNotificationCenterInterface {
     @MainActor func willPresent(
         _ notification: UNNotification
     ) {
+        nonisolated(unsafe) let info = notification.request.content.userInfo
         Task(priority: .high) {
-            await pushHandler(notification.request.content.userInfo)
+            await pushHandler(info)
         }
     }
 }

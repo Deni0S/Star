@@ -1,8 +1,8 @@
-import SwiftUICore
+import SwiftUI
 
 struct StarMainAssembly {
 
-    func build(
+    @MainActor func build(
         unauthorized: Binding<Bool>
     ) -> StarMainView {
         let appCoordinator = AppCoordinator.shared

@@ -4,7 +4,7 @@ import SwiftUI
 
 typealias AuthorizationInterface = Sendable & AuthorizationHandlersInterface
 
-protocol AuthorizationHandlersInterface {
+protocol AuthorizationHandlersInterface: Sendable {
     /// Requesting an authorization code
     func codeRequest(_ phoneNumber: String) async
     /// Checking the text message code for authorization
@@ -28,7 +28,7 @@ final actor AuthorizationManager {
 
 // MARK: - Authorization Handlers
 
-extension AuthorizationManager: AuthorizationHandlersInterface {
+extension AuthorizationManager: AuthorizationInterface {
 
     func codeRequest(
         _ phoneNumber: String

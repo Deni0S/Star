@@ -2,10 +2,10 @@ import SwiftUI
 
 final class AuthorizationViewModel: ObservableObject {
 
-    private let authirizationHandlers: AuthorizationHandlersInterface
+    private let authirizationHandlers: AuthorizationInterface
 
     init(
-        authirizationHandlers: AuthorizationHandlersInterface
+        authirizationHandlers: AuthorizationInterface
     ) {
         self.authirizationHandlers = authirizationHandlers
     }

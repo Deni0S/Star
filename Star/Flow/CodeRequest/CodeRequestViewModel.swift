@@ -5,7 +5,7 @@ final class CodeRequestViewModel: ObservableObject {
 
     @Binding var nextStep: Bool
 
-    private let authirizationHandlers: AuthorizationHandlersInterface
+    private let authirizationHandlers: AuthorizationInterface
 
     @Published private(set) var currentCode = [String](repeating: "", count: 5)
     @Published private(set) var clearText = false
@@ -16,6 +16,7 @@ final class CodeRequestViewModel: ObservableObject {
 
     private let lock = NSLock()
     private var cancellable: Cancellable?
+    private var cancellables = Set<AnyCancellable>()
     private let timer = Timer.publish(every: 1, on: .main, in: .default)
     private var waitTime = 0
 
@@ -27,7 +28,7 @@ final class CodeRequestViewModel: ObservableObject {
     let phoneNumber: String
 
     init(
-        authirizationHandlers: AuthorizationHandlersInterface,
+        authirizationHandlers: AuthorizationInterface,
         phoneNumber: String,
         nextStep: Binding<Bool>
     ) {
@@ -102,20 +103,32 @@ final class CodeRequestViewModel: ObservableObject {
 
 private extension CodeRequestViewModel {
 
+//    func addObserver() {
+//        NotificationCenter.default.addObserver(
+//            forName: NSNotification.Name("SMSCodeReceived"),
+//            object: nil,
+//            queue: .main
+//        ) { [weak self] note in
+//            if let code = note.object as? String {
+//                Task { @MainActor  in
+//                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+//                    self?.smsCode = code
+//                    self?.chekUpdate.toggle()
+//                }
+//            }
+//        }
+//    }
+
     func addObserver() {
-        NotificationCenter.default.addObserver(
-            forName: NSNotification.Name("SMSCodeReceived"),
-            object: nil,
-            queue: .main
-        ) { [weak self] note in
-            if let code = note.object as? String {
-                Task { @MainActor  in
-                    UINotificationFeedbackGenerator().notificationOccurred(.success)
-                    self?.smsCode = code
-                    self?.chekUpdate.toggle()
-                }
+        NotificationCenter.default.publisher(for: Notification.Name("SMSCodeReceived"))
+            .compactMap { $0.object as? String }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] code in
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                self?.smsCode = code
+                self?.chekUpdate.toggle()
             }
-        }
+            .store(in: &cancellables)
     }
 
     func setupTimer() {
